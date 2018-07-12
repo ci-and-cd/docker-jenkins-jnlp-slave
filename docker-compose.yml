@@ -1,0 +1,67 @@
+
+version: '2.1'
+services:
+  jenkins-jnlp-slave:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+      - IMAGE_ARG_APT_MIRROR=${IMAGE_ARG_APT_MIRROR:-mirrors.163.com}
+
+      - IMAGE_ARG_ENCODING=${IMAGE_ARG_ENCODING:-UTF-8}
+      - IMAGE_ARG_LANGUAGE=${IMAGE_ARG_LANGUAGE:-zh}
+      - IMAGE_ARG_LOCALE=${IMAGE_ARG_LOCALE:-zh_CN}
+      - IMAGE_ARG_REGION=${IMAGE_ARG_REGION:-CN}
+      #- IMAGE_ARG_TZ=${IMAGE_ARG_TZ:-UTC+8:00}
+      - IMAGE_ARG_TZ_AREA=${IMAGE_ARG_TZ_AREA:-Asia}
+      - IMAGE_ARG_TZ_ZONE=${IMAGE_ARG_TZ_ZONE:-Shanghai}
+
+      - IMAGE_ARG_USER=${IMAGE_ARG_USER:-ubuntu}
+      - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.20}
+    container_name: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
+    environment:
+    - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
+    #- JENKINS_URL=http://jenkins.local:8080 <secret> <slave_name>
+    #- JENKINS_URL=http://jenkins.local:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>
+    - JENKINS_URL=${JENKINS_URL}
+    hostname: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
+    image: cirepo/jenkins-jnlp-slave:3.20-bionic
+    #external_links:
+    #- jenkins.${INFRASTRUCTURE:-local}:jenkins.${INFRASTRUCTURE:-local}
+    #- nexus.${INFRASTRUCTURE:-local}:nexus3.${INFRASTRUCTURE:-local}
+    #- mvnsite.${INFRASTRUCTURE:-local}:mvnsite.${INFRASTRUCTURE:-local}
+    networks:
+      local-network:
+        ipv4_address: 172.16.238.35
+        ipv6_address: 2001:3984:3989::35
+    restart: always
+    volumes:
+    - data-agent-workdir:/home/ubuntu/agent
+    - data-dot-jenkins:/home/ubuntu/.jenkins
+    - /var/run/docker.sock:/var/run/docker.sock
+
+
+networks:
+  local-network:
+    external: true
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+      - subnet: 2001:3984:3989::/64
+
+volumes:
+  data-agent-workdir:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/agent-workdir
+      o: bind
+  data-dot-jenkins:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/dot_jenkins
+      o: bind

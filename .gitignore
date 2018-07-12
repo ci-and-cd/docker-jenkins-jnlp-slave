@@ -1,0 +1,7 @@
+
+.idea
+*.iml
+
+.DS_Store
+
+/k8s/jenkins-jnlp-slave-secret.yaml
