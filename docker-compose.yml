@@ -18,26 +18,27 @@ services:
 
       - IMAGE_ARG_USER=${IMAGE_ARG_USER:-ubuntu}
       - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.20}
+
     container_name: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
     environment:
     - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
     #- JENKINS_URL=http://jenkins.local:8080 <secret> <slave_name>
     #- JENKINS_URL=http://jenkins.local:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>
     - JENKINS_URL=${JENKINS_URL}
-    hostname: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
-    image: cirepo/jenkins-jnlp-slave:3.20-bionic
     #external_links:
     #- jenkins.${INFRASTRUCTURE:-local}:jenkins.${INFRASTRUCTURE:-local}
     #- nexus.${INFRASTRUCTURE:-local}:nexus3.${INFRASTRUCTURE:-local}
     #- mvnsite.${INFRASTRUCTURE:-local}:mvnsite.${INFRASTRUCTURE:-local}
+    hostname: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
+    image: cirepo/jenkins-jnlp-slave:3.20-bionic
     networks:
       local-network:
         ipv4_address: 172.16.238.35
         ipv6_address: 2001:3984:3989::35
     restart: always
     volumes:
-    - data-agent-workdir:/home/ubuntu/agent
-    - data-dot-jenkins:/home/ubuntu/.jenkins
+    - data-agent-workdir:/home/${IMAGE_ARG_USER:-ubuntu}/agent
+    - data-dot-jenkins:/home/${IMAGE_ARG_USER:-ubuntu}/.jenkins
     - /var/run/docker.sock:/var/run/docker.sock
 
 
