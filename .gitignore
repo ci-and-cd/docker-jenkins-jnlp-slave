@@ -4,4 +4,6 @@
 
 .DS_Store
 
+Dockerfile
+
 /k8s/jenkins-jnlp-slave-secret.yaml
