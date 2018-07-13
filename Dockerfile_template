@@ -1,5 +1,5 @@
 
-FROM cirepo/bionic-cibase:latest
+FROM cirepo/cibase:latest-bionic
 
 
 # ------------------------------ see also: jenkinsci/docker-slave ------------------------------
