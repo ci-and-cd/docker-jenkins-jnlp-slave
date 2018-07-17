@@ -48,7 +48,7 @@ WORKDIR /home/${IMAGE_ARG_USER:-ubuntu}
 
 
 # ------------------------------ see also: jenkinsci/jnlp-slave ------------------------------
-COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY docker /
 ENV PATH /usr/local/bin:${PATH}
 ENTRYPOINT ["entrypoint.sh"]
 # ------------------------------ see also: jenkinsci/jnlp-slave ------------------------------
