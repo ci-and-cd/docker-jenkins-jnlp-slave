@@ -14,7 +14,7 @@ jenkins-jnlp-slave
 
 - `export CI_INFRA_OPT_GIT_AUTH_TOKEN=<your_CI_INFRA_OPT_GIT_AUTH_TOKEN>`
 
-- Open jenkins '/computer' URL (e.g. http://jenkins.local:18083/computer/)
+- Open jenkins '/computer' URL (e.g. http://jenkins:18083/computer/)
   Create 'Permanent Agent' with  
   'Name'='<slave_name>'  
   'Launcher'='Launch agent via Java Web Start' (hudson.slaves.JNLPLauncher)  
@@ -25,17 +25,17 @@ jenkins-jnlp-slave
 
 ```
 for (aSlave in hudson.model.Hudson.instance.slaves)
-  { println "export JENKINS_URL=\"http://jenkins.local:8080 " + aSlave.name + " " + aSlave.getComputer().getJnlpMac() + "\"" }
+  { println "export JENKINS_URL=\"http://jenkins:8080 " + aSlave.name + " " + aSlave.getComputer().getJnlpMac() + "\"" }
 
 ```
 
-- `export JENKINS_URL="http://jenkins.local:8080 <secret> <slave_name>"`
+- `export JENKINS_URL="http://jenkins:8080 <secret> <slave_name>"`
 
 ## Auto-provision slaves (sending user with -jnlpCredentials <username>:<token>)
 
 - `export CI_INFRA_OPT_GIT_AUTH_TOKEN=<your_CI_INFRA_OPT_GIT_AUTH_TOKEN>`
 
-- Open jenkins '/computer' URL (e.g. http://jenkins.local:18083/computer/)
+- Open jenkins '/computer' URL (e.g. http://jenkins:18083/computer/)
   Create 'Permanent Agent' with  
   'Name'='<slave_name>'  
   'Launcher'='Launch agent via Java Web Start' (hudson.slaves.JNLPLauncher)  
@@ -43,7 +43,7 @@ for (aSlave in hudson.model.Hudson.instance.slaves)
 
 - Create a user and login as it to get token
 
-- `export JENKINS_URL="http://jenkins.local:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>"`
+- `export JENKINS_URL="http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>"`
 
 ## Provision on k8s
 

@@ -20,17 +20,17 @@ services:
       - IMAGE_ARG_USER=${IMAGE_ARG_USER:-ubuntu}
       - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.20}
 
-    container_name: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
+    container_name: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
     environment:
     - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
-    #- JENKINS_URL=http://jenkins.local:8080 <secret> <slave_name>
-    #- JENKINS_URL=http://jenkins.local:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>
+    #- JENKINS_URL=http://jenkins:8080 <secret> <slave_name>
+    #- JENKINS_URL=http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>
     - JENKINS_URL=${JENKINS_URL}
     #external_links:
-    #- jenkins.${INFRASTRUCTURE:-local}:jenkins.${INFRASTRUCTURE:-local}
-    #- nexus.${INFRASTRUCTURE:-local}:nexus3.${INFRASTRUCTURE:-local}
-    #- mvnsite.${INFRASTRUCTURE:-local}:mvnsite.${INFRASTRUCTURE:-local}
-    hostname: ${JENKINS_SLAVE_DOMAIN:-jenkins-jnlp-slave}.${INFRASTRUCTURE:-local}
+    #- jenkins:jenkins
+    #- nexus:nexus3
+    #- mvnsite:mvnsite
+    hostname: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
     image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.20-en_US.UTF-8_Etc.UTC-bionic}
     networks:
       local-network:
