@@ -3,7 +3,7 @@ FROM cirepo/cibase:latest-bionic
 
 
 # ------------------------------ see also: jenkinsci/docker-slave ------------------------------
-LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.20"
+LABEL Description="This is a base image, which provides the Jenkins agent executable (slave.jar)" Vendor="Jenkins project" Version="3.27"
 
 
 ARG IMAGE_ARG_APT_MIRROR
@@ -34,7 +34,7 @@ COPY --from=cirepo/locale:%IMAGE_ARG_LOCALE%.%IMAGE_ARG_ENCODING%_%IMAGE_ARG_TZ_
 
 
 RUN set -ex \
-  && sudo curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${IMAGE_ARG_VERSION:-3.20}/remoting-${IMAGE_ARG_VERSION:-3.20}.jar \
+  && sudo curl --create-dirs -sSLo /usr/share/jenkins/slave.jar https://repo.jenkins-ci.org/public/org/jenkins-ci/main/remoting/${IMAGE_ARG_VERSION:-3.27}/remoting-${IMAGE_ARG_VERSION:-3.27}.jar \
   && sudo chmod 755 /usr/share/jenkins \
   && sudo chmod 644 /usr/share/jenkins/slave.jar \
   && mkdir -p /home/${IMAGE_ARG_USER:-ubuntu}/.jenkins \

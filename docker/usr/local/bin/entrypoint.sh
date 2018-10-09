@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # The MIT License
 #
@@ -30,7 +30,7 @@
 # * JENKINS_AGENT_NAME : agent name, if not set as an argument
 # * JENKINS_AGENT_WORKDIR : agent work directory, if not set by optional parameter -workDir
 
-mkdir -p /home/$(whoami)/.jenkins
+mkdir -p /home/${USER:-jenkins}/.jenkins
 
 if [ $# -eq 1 ]; then
 
@@ -39,7 +39,7 @@ if [ $# -eq 1 ]; then
 
 else
 
-	# if -tunnel is not provided try env vars
+	# if -tunnel is not provided, try env vars
 	case "$@" in
 		*"-tunnel "*) ;;
 		*)
@@ -48,7 +48,7 @@ else
 		fi ;;
 	esac
 
-	# if -workDir is not provided try env vars
+	# if -workDir is not provided, try env vars
 	if [ ! -z "$JENKINS_AGENT_WORKDIR" ]; then
 		case "$@" in
 			*"-workDir"*) echo "Warning: Work directory is defined twice in command-line arguments and the environment variable" ;;
@@ -70,7 +70,13 @@ else
 		JNLP_PROTOCOL_OPTS="-Dorg.jenkinsci.remoting.engine.JnlpProtocol3.disabled=true"
 	fi
 
-	# If both required options are defined, do not pass the parameters
+	# if java home is defined, use it
+	JAVA_BIN="java"
+	if [ "$JAVA_HOME" ]; then
+		JAVA_BIN="$JAVA_HOME/bin/java"
+	fi
+
+	# if both required options are defined, do not pass the parameters
 	OPT_JENKINS_SECRET=""
 	if [ -n "$JENKINS_SECRET" ]; then
 		case "$@" in
@@ -92,5 +98,6 @@ else
 	#TODO: Handle the case when the command-line and Environment variable contain different values.
 	#It is fine it blows up for now since it should lead to an error anyway.
 
-	exec java $JAVA_OPTS $JNLP_PROTOCOL_OPTS -cp /usr/share/jenkins/slave.jar hudson.remoting.jnlp.Main -headless $TUNNEL $URL $WORKDIR $OPT_JENKINS_SECRET $OPT_JENKINS_AGENT_NAME "$@"
+    echo "exec $JAVA_BIN $JAVA_OPTS $JNLP_PROTOCOL_OPTS -cp /usr/share/jenkins/slave.jar hudson.remoting.jnlp.Main -headless $TUNNEL $URL $WORKDIR $OPT_JENKINS_SECRET $OPT_JENKINS_AGENT_NAME \"$@\""
+	exec $JAVA_BIN $JAVA_OPTS $JNLP_PROTOCOL_OPTS -cp /usr/share/jenkins/slave.jar hudson.remoting.jnlp.Main -headless $TUNNEL $URL $WORKDIR $OPT_JENKINS_SECRET $OPT_JENKINS_AGENT_NAME "$@"
 fi

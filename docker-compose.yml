@@ -18,20 +18,23 @@ services:
       - IMAGE_ARG_TZ_ZONE=${IMAGE_ARG_TZ_ZONE:-UTC}
 
       - IMAGE_ARG_USER=${IMAGE_ARG_USER:-ubuntu}
-      - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.20}
+      - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.27}
 
+    #command: <secret> <slave_name>
+    #command: -credentials <username>:<token>
+    command: ${JENKINS_JNLP_SLAVE_COMMAND:-secret jenkins-jnlp-slave}
     container_name: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
     environment:
     - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
-    #- JENKINS_URL=http://jenkins:8080 <secret> <slave_name>
-    #- JENKINS_URL=http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>
-    - JENKINS_URL=${JENKINS_URL}
+    #- JENKINS_URL=http://jenkins:8080
+    #- JENKINS_URL=http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp
+    - JENKINS_URL=${JENKINS_URL:-http://172.16.238.33:8080/computer/jenkins-jnlp-slave/slave-agent.jnlp -jnlpCredentials admin:admin_token}
     #external_links:
     #- jenkins:jenkins
     #- nexus:nexus3
     #- mvnsite:mvnsite
     hostname: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
-    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.20-en_US.UTF-8_Etc.UTC-bionic}
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.27-en_US.UTF-8_Etc.UTC-bionic}
     networks:
       local-network:
         ipv4_address: 172.16.238.35

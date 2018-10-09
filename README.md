@@ -24,14 +24,19 @@ jenkins-jnlp-slave
   Run following 2 lines in script console (secret isn't visible using the API or even jenkins-cli)
 
 ```
-for (aSlave in hudson.model.Hudson.instance.slaves)
-  { println "export JENKINS_URL=\"http://jenkins:8080 " + aSlave.name + " " + aSlave.getComputer().getJnlpMac() + "\"" }
-
+for (aSlave in hudson.model.Hudson.instance.slaves) {
+  println "export JENKINS_URL=\"" + Hudson.instance.getRootUrl() + "\""
+  println "export JENKINS_JNLP_SLAVE_COMMAND=\"" + aSlave.getComputer().getJnlpMac() + " " + aSlave.name + "\""
+}
 ```
 
-- `export JENKINS_URL="http://jenkins:8080 <secret> <slave_name>"`
+- `export JENKINS_URL="http://jenkins:8080"`
+- `export JENKINS_JNLP_SLAVE_COMMAND="<secret> <slave_name>"`
 
-## Auto-provision slaves (sending user with -jnlpCredentials <username>:<token>)
+<del>
+## Auto-provision slaves (sending user with -credentials <username>:<token>)
+
+Not work since version 3.27
 
 - `export CI_INFRA_OPT_GIT_AUTH_TOKEN=<your_CI_INFRA_OPT_GIT_AUTH_TOKEN>`
 
@@ -43,7 +48,8 @@ for (aSlave in hudson.model.Hudson.instance.slaves)
 
 - Create a user and login as it to get token
 
-- `export JENKINS_URL="http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp -jnlpCredentials <username>:<token>"`
+- `export JENKINS_URL="http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp -credentials <username>:<token>"`
+</del>
 
 ## Provision on k8s
 
