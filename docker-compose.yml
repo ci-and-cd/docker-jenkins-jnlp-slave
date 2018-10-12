@@ -28,7 +28,7 @@ services:
     - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
     #- JENKINS_URL=http://jenkins:8080
     #- JENKINS_URL=http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp
-    - JENKINS_URL=${JENKINS_URL:-http://172.16.238.33:8080/computer/jenkins-jnlp-slave/slave-agent.jnlp -jnlpCredentials admin:admin_token}
+    - JENKINS_URL=${JENKINS_URL:-http://172.16.238.33:8080}
     #external_links:
     #- jenkins:jenkins
     #- nexus:nexus3
