@@ -34,7 +34,7 @@ services:
     #- nexus:nexus3
     #- mvnsite:mvnsite
     hostname: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
-    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.27-en_US.UTF-8_Etc.UTC-bionic}
+    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.27-en_US.UTF-8_Etc.UTC-bionic}
     networks:
       local-network:
         ipv4_address: 172.16.238.35
