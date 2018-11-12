@@ -23,7 +23,7 @@ services:
     #command: <secret> <slave_name>
     #command: -credentials <username>:<token>
     command: ${JENKINS_JNLP_SLAVE_COMMAND:-secret jenkins-jnlp-slave}
-    container_name: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
+    container_name: ${CONTAINER_HOST_NAME:-standalone.jenkins-jnlp-slave}
     environment:
     - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
     #- JENKINS_URL=http://jenkins:8080
@@ -33,7 +33,7 @@ services:
     #- jenkins:jenkins
     #- nexus:nexus3
     #- mvnsite:mvnsite
-    hostname: ${CONTAINER_HOST_NAME:-jenkins-jnlp-slave}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.jenkins-jnlp-slave}
     image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.27-en_US.UTF-8_Etc.UTC-bionic}
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
@@ -45,8 +45,8 @@ services:
       instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/jenkins-jnlp-slave/standalone}
     networks:
       local-network:
-        ipv4_address: 172.16.238.35
-        #ipv6_address: 2001:3984:3989::35
+        ipv4_address: ${IPV4_ADDRESS:-172.16.238.35}
+        #ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::35}
     restart: always
     volumes:
     - data-agent-workdir:/home/${IMAGE_ARG_USER:-ubuntu}/agent
