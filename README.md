@@ -84,3 +84,7 @@ sudo chmod a+rw /var/run/docker.sock
 
 [https://hub.docker.com/r/jenkinsci/slave/](https://hub.docker.com/r/jenkinsci/slave/)
 [https://github.com/jenkinsci/docker-slave](https://github.com/jenkinsci/docker-slave)
+
+
+[defunct sh and sleep processes](https://github.com/jenkinsci/docker-jnlp-slave/issues/51)
+[Handling of zombie processes would be useful](https://github.com/jenkinsci/docker/issues/54)
