@@ -19,7 +19,7 @@ spec:
         tag: oss
     spec:
       containers:
-      - image: cirepo/jenkins-jnlp-slave:3.27-bionic
+      - image: cirepo/jenkins-jnlp-slave:3.29-bionic
         name: jenkins-jnlp-slave
 
         resources:

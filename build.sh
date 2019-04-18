@@ -7,12 +7,12 @@ docker-compose version
 
 WORK_DIR=$(pwd)
 
-if [ -n "${CI_OPT_DOCKER_REGISTRY_PASS}" ] && [ -n "${CI_OPT_DOCKER_REGISTRY_USER}" ]; then echo ${CI_OPT_DOCKER_REGISTRY_PASS} | docker login --password-stdin -u="${CI_OPT_DOCKER_REGISTRY_USER}" docker.io; fi
+if [[ -n "${CI_OPT_DOCKER_REGISTRY_PASS}" ]] && [[ -n "${CI_OPT_DOCKER_REGISTRY_USER}" ]]; then echo ${CI_OPT_DOCKER_REGISTRY_PASS} | docker login --password-stdin -u="${CI_OPT_DOCKER_REGISTRY_USER}" docker.io; fi
 
 export IMAGE_PREFIX=${IMAGE_PREFIX:-cirepo/};
 export IMAGE_NAME=${IMAGE_NAME:-jenkins-jnlp-slave}
-export IMAGE_TAG=${IMAGE_ARG_VERSION:-3.27}-${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}_${IMAGE_ARG_TZ_AREA:-Etc}.${IMAGE_ARG_TZ_ZONE:-UTC}-bionic
-if [ "${TRAVIS_BRANCH}" != "master" ]; then export IMAGE_TAG=${IMAGE_TAG}-SNAPSHOT; fi
+export IMAGE_TAG=${IMAGE_ARG_VERSION:-3.29}-${IMAGE_ARG_LOCALE:-en_US}.${IMAGE_ARG_ENCODING:-UTF-8}_${IMAGE_ARG_TZ_AREA:-Etc}.${IMAGE_ARG_TZ_ZONE:-UTC}-bionic
+if [[ "${TRAVIS_BRANCH}" != "master" ]]; then export IMAGE_TAG=${IMAGE_TAG}-SNAPSHOT; fi
 
 sed "s#%IMAGE_ARG_ENCODING%#${IMAGE_ARG_ENCODING:-UTF-8}#g" Dockerfile_template | \
   sed "s#%IMAGE_ARG_LOCALE%#${IMAGE_ARG_LOCALE:-en_US}#g" | \

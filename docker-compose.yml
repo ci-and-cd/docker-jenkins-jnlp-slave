@@ -1,5 +1,5 @@
 
-version: '2.1'
+version: '2.2'
 services:
   jenkins-jnlp-slave:
     build:
@@ -18,7 +18,7 @@ services:
       - IMAGE_ARG_TZ_ZONE=${IMAGE_ARG_TZ_ZONE:-UTC}
 
       - IMAGE_ARG_USER=${IMAGE_ARG_USER:-ubuntu}
-      - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.27}
+      - IMAGE_ARG_VERSION=${IMAGE_ARG_VERSION:-3.29}
 
     #command: <secret> <slave_name>
     #command: -credentials <username>:<token>
@@ -34,7 +34,9 @@ services:
     #- nexus:nexus3
     #- mvnsite:mvnsite
     hostname: ${CONTAINER_HOST_NAME:-standalone.jenkins-jnlp-slave}
-    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.27-en_US.UTF-8_Etc.UTC-bionic}
+    image: ${IMAGE_PREFIX:-cirepo/}${IMAGE_NAME:-jenkins-jnlp-slave}:${IMAGE_TAG:-3.29-en_US.UTF-8_Etc.UTC-bionic}
+    # --init Prevent jenkins to leak zombie processes
+    init: true
     labels:
       deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
       deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
