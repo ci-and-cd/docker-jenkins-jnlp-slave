@@ -4,7 +4,7 @@ jenkins-jnlp-slave
 
 ## Environment variables
 
-- CI_INFRA_OPT_GIT_AUTH_TOKEN
+- CI_OPT_GIT_AUTH_TOKEN
 > see docker-gitlab/gitlab-runner for more info
 
 - JENKINS_URL
@@ -12,7 +12,7 @@ jenkins-jnlp-slave
 
 ## Manually provision slaves (Create slave in jenkins web console)
 
-- `export CI_INFRA_OPT_GIT_AUTH_TOKEN=<your_CI_INFRA_OPT_GIT_AUTH_TOKEN>`
+- `export CI_OPT_GIT_AUTH_TOKEN=<your_CI_OPT_GIT_AUTH_TOKEN>`
 
 - Open jenkins '/computer' URL (e.g. http://jenkins:18083/computer/)
   Create 'Permanent Agent' with  
@@ -38,7 +38,7 @@ for (aSlave in hudson.model.Hudson.instance.slaves) {
 
 Not work since version 3.27
 
-- `export CI_INFRA_OPT_GIT_AUTH_TOKEN=<your_CI_INFRA_OPT_GIT_AUTH_TOKEN>`
+- `export CI_OPT_GIT_AUTH_TOKEN=<your_CI_OPT_GIT_AUTH_TOKEN>`
 
 - Open jenkins '/computer' URL (e.g. http://jenkins:18083/computer/)
   Create 'Permanent Agent' with  
@@ -60,7 +60,7 @@ Not work since version 3.27
 - Generate jenkins-jnlp-slave-secret.yaml
 
 ```sh
-sed "s#<PUT_BASE64_CI_INFRA_OPT_GIT_AUTH_TOKEN_HERE_MANUALLY>#$(echo -n ${CI_INFRA_OPT_GIT_AUTH_TOKEN} | base64 -w 0)#" jenkins-jnlp-slave-secret.template | \
+sed "s#<PUT_BASE64_CI_OPT_GIT_AUTH_TOKEN_HERE_MANUALLY>#$(echo -n ${CI_OPT_GIT_AUTH_TOKEN} | base64 -w 0)#" jenkins-jnlp-slave-secret.template | \
 sed "s#<PUT_JENKINS_URL_HERE_MANUALLY>#$(echo -n ${JENKINS_URL} | base64 -w 0)#" \
 > jenkins-jnlp-slave-secret.yaml
 ```

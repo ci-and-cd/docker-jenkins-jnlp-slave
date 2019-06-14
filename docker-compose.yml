@@ -25,7 +25,7 @@ services:
     command: ${JENKINS_JNLP_SLAVE_COMMAND:-secret jenkins-jnlp-slave}
     container_name: ${CONTAINER_HOST_NAME:-standalone.jenkins-jnlp-slave}
     environment:
-    - CI_INFRA_OPT_GIT_AUTH_TOKEN=${CI_INFRA_OPT_GIT_AUTH_TOKEN}
+    - CI_OPT_GIT_AUTH_TOKEN=${CI_OPT_GIT_AUTH_TOKEN}
     #- JENKINS_URL=http://jenkins:8080
     #- JENKINS_URL=http://jenkins:8080/computer/<slave_name>/slave-agent.jnlp
     - JENKINS_URL=${JENKINS_URL:-http://172.16.238.33:8080}
